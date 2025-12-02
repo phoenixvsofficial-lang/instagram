@@ -46,9 +46,8 @@
       border:5px solid var(--phoenix-orange);
       padding:8px;
       box-shadow:0 0 25px rgba(255,107,53,.8), 0 0 60px rgba(255,107,53,.4);
-      animation:glowPulse 3s ease-in-out infinite;
+      animation:glowPulse 3s ease-in-out infinite, heroFadeIn 1s ease forwards;
       margin-bottom:12px; opacity:0; transform:translateY(-30px);
-      animation:heroFadeIn 1s ease forwards;
     }
     .hero h1{
       font-family:'Playfair Display',serif; font-size:2rem;
@@ -96,7 +95,7 @@
     .website,.email{border:1px solid var(--phoenix-amber);}
     .whatsapp{border:1px solid var(--phoenix-green);}
 
-    /* === Follow Section === */
+    /* === Follow Section === (sekarang tidak dipakai, boleh dihapus kalau mau) */
     .follow-section{
       text-align:center; font-size:.95rem; color:#ccc;
       margin:8px 0 30px; position:relative; top:calc(-1*var(--top-lift));
@@ -137,7 +136,7 @@
       background:linear-gradient(160deg,rgba(15,15,15,.95),rgba(30,20,15,.95));
       backdrop-filter:blur(16px); -webkit-backdrop-filter:blur(16px);
       padding:25px; border-radius:20px 20px 0 0; width:100%; max-height:70vh;
-      overflow:hidden; /* ← scroll pindah ke .popup-content */
+      overflow:hidden;
       position:relative;
       transform:translateY(100%); transition:transform .4s ease;
       border-top:3px solid var(--phoenix-orange);
@@ -146,13 +145,11 @@
     }
     .popup.active{transform:translateY(0);}
 
-    /* Ember popup canvas */
     #popupEmber{
       position:absolute; inset:0; width:100%; height:100%;
       z-index:0; pointer-events:none;
     }
 
-    /* Isi popup (scrollable) */
     .popup-content{
       position:relative; z-index:3; max-height:70vh;
       overflow-y:auto; -webkit-overflow-scrolling:touch;
@@ -160,7 +157,6 @@
       isolation:isolate; background:transparent;
     }
 
-    /* Bar oranye ikut isi (anti "nyangkut") */
     .topbar{
       height:3px;
       background:linear-gradient(90deg,var(--phoenix-orange),var(--phoenix-amber),var(--phoenix-orange));
@@ -182,7 +178,6 @@
       border:none; font-size:1.6rem; color:#fff; cursor:pointer; z-index:5;
     }
 
-    /* Tombol store */
     .popup .store-btn{
       display:flex; align-items:center; gap:10px;
       background:var(--glass-bg); border:1px solid var(--glass-border);
@@ -199,7 +194,6 @@
     }
     @keyframes storeSlideIn{to{opacity:1; transform:translateX(0);} }
 
-    /* Drag state (anti-ghosting iOS) */
     .popup.dragging,.popup-overlay.dragging{
       backdrop-filter:none!important; -webkit-backdrop-filter:none!important;
     }
@@ -235,14 +229,7 @@
     <a href="#" class="whatsapp" id="whatsappBtn"><i class="fab fa-whatsapp"></i> WhatsApp</a>
   </div>
 
-  <div class="follow-section">
-    <p>untuk update seputar <b>device</b>, <b>liquid</b> dan lain lain:</p>
-    <div class="follow-links">
-      <a href="https://www.instagram.com/phoenixvs.official"><i class="fab fa-instagram"></i> Instagram</a>
-      <a href="https://www.youtube.com/@PhoenixOfficial-r6j"><i class="fab fa-youtube"></i> YouTube</a>
-      <a href="https://www.tiktok.com/@phoenixvs.official"><i class="fab fa-tiktok"></i> TikTok</a>
-    </div>
-  </div>
+  <!-- follow-section dihapus dari sini -->
 
   <button class="btn-branch" id="openPopup">📍 Lokasi Cabang</button>
 
@@ -251,26 +238,24 @@
     <div class="popup" id="popupBox" aria-modal="true" role="dialog">
       <canvas id="popupEmber"></canvas>
 
-      <!-- Isi scrollable -->
       <div class="popup-content" id="popupContent">
         <div class="topbar"></div>
         <div class="indicator"></div>
         <button class="close" id="closePopup" aria-label="Tutup">✖</button>
         <h2>📍 Lokasi Cabang Phoenix</h2>
 
-        <!-- Tombol cabang -->
-        <a href="https://maps.app.goo.gl/Y8GifwrGXPv5HLpY6?g_st=ipc" target="_blank" rel="noopener" class="store-btn"><i class="fa-solid fa-location-dot"></i> Store 1 - Alam Sutera</a>
-        <a href="https://maps.google.com/?q=Phoenix+Vape+Coffee+Roxy" target="_blank" rel="noopener" class="store-btn"><i class="fa-solid fa-location-dot"></i> Store 2 - Roxy</a>
-        <a href="https://maps.google.com/?q=Phoenix+Vape+Coffee+Pademangan" target="_blank" rel="noopener" class="store-btn"><i class="fa-solid fa-location-dot"></i> Store 3 - Pademangan</a>
-        <a href="https://maps.google.com/?q=Phoenix+Vape+Coffee+Jembatan+Besi" target="_blank" rel="noopener" class="store-btn"><i class="fa-solid fa-location-dot"></i> Store 5 - Jembatan Besi</a>
-        <a href="https://maps.app.goo.gl/D72zZYGnVe4GAE1o6?g_st=ipc" target="_blank" rel="noopener" class="store-btn"><i class="fa-solid fa-location-dot"></i> Store 6 - Binus Center</a>
-        <a href="https://maps.google.com/?q=Phoenix+Vape+Coffee+Raden+Saleh" target="_blank" rel="noopener" class="store-btn"><i class="fa-solid fa-location-dot"></i> Store 7 - Raden Saleh</a>
-        <a href="https://maps.google.com/?q=Phoenix+Vape+Coffee+Ciledug" target="_blank" rel="noopener" class="store-btn"><i class="fa-solid fa-location-dot"></i> Store 8 - Ciledug</a>
-        <a href="https://maps.app.goo.gl/KbGqkM7eVME5Qn4w9?g_st=iw" target="_blank" rel="noopener" class="store-btn"><i class="fa-solid fa-location-dot"></i> Store 9 - Ceger</a>
-        <a href="https://maps.google.com/?q=Phoenix+Vape+Coffee+Pluit" target="_blank" rel="noopener" class="store-btn"><i class="fa-solid fa-location-dot"></i> Store 11 - Pluit</a>
-        <a href="https://maps.google.com/?q=Phoenix+Vape+Coffee+Mangga+Besar" target="_blank" rel="noopener" class="store-btn"><i class="fa-solid fa-location-dot"></i> Store 13 - Mangga Besar</a>
-        <a href="https://maps.google.com/?q=Phoenix+Vape+Coffee+Lokasari" target="_blank" rel="noopener" class="store-btn"><i class="fa-solid fa-location-dot"></i> Store 18 - Lokasari</a>
-        <a href="https://maps.google.com/?q=Phoenix+Vape+Coffee+Untar" target="_blank" rel="noopener" class="store-btn"><i class="fa-solid fa-location-dot"></i> Store 68 - Untar</a>
+        <a href="https://maps.app.goo.gl/Y8GifwrGXPv5HLpY6?g_st=ipc" target="_blank" rel="noopener noreferrer" class="store-btn"><i class="fa-solid fa-location-dot"></i> Store 1 - Alam Sutera</a>
+        <a href="https://maps.google.com/?q=Phoenix+Vape+Coffee+Roxy" target="_blank" rel="noopener noreferrer" class="store-btn"><i class="fa-solid fa-location-dot"></i> Store 2 - Roxy</a>
+        <a href="https://maps.google.com/?q=Phoenix+Vape+Coffee+Pademangan" target="_blank" rel="noopener noreferrer" class="store-btn"><i class="fa-solid fa-location-dot"></i> Store 3 - Pademangan</a>
+        <a href="https://maps.google.com/?q=Phoenix+Vape+Coffee+Jembatan+Besi" target="_blank" rel="noopener noreferrer" class="store-btn"><i class="fa-solid fa-location-dot"></i> Store 5 - Jembatan Besi</a>
+        <a href="https://maps.app.goo.gl/D72zZYGnVe4GAE1o6?g_st=ipc" target="_blank" rel="noopener noreferrer" class="store-btn"><i class="fa-solid fa-location-dot"></i> Store 6 - Binus Center</a>
+        <a href="https://maps.google.com/?q=Phoenix+Vape+Coffee+Raden+Saleh" target="_blank" rel="noopener noreferrer" class="store-btn"><i class="fa-solid fa-location-dot"></i> Store 7 - Raden Saleh</a>
+        <a href="https://maps.google.com/?q=Phoenix+Vape+Coffee+Ciledug" target="_blank" rel="noopener noreferrer" class="store-btn"><i class="fa-solid fa-location-dot"></i> Store 8 - Ciledug</a>
+        <a href="https://maps.app.goo.gl/KbGqkM7eVME5Qn4w9?g_st=iw" target="_blank" rel="noopener noreferrer" class="store-btn"><i class="fa-solid fa-location-dot"></i> Store 9 - Ceger</a>
+        <a href="https://maps.google.com/?q=Phoenix+Vape+Coffee+Pluit" target="_blank" rel="noopener noreferrer" class="store-btn"><i class="fa-solid fa-location-dot"></i> Store 11 - Pluit</a>
+        <a href="https://maps.google.com/?q=Phoenix+Vape+Coffee+Mangga+Besar" target="_blank" rel="noopener noreferrer" class="store-btn"><i class="fa-solid fa-location-dot"></i> Store 13 - Mangga Besar</a>
+        <a href="https://maps.google.com/?q=Phoenix+Vape+Coffee+Lokasari" target="_blank" rel="noopener noreferrer" class="store-btn"><i class="fa-solid fa-location-dot"></i> Store 18 - Lokasari</a>
+        <a href="https://maps.google.com/?q=Phoenix+Vape+Coffee+Untar" target="_blank" rel="noopener noreferrer" class="store-btn"><i class="fa-solid fa-location-dot"></i> Store 68 - Untar</a>
       </div>
     </div>
   </div>
@@ -293,11 +278,10 @@
       isAnimating=true;
       popupOverlay.classList.add('active');
       document.body.classList.add('noscroll');
-      void popupBox.offsetHeight; /* force reflow */
+      void popupBox.offsetHeight;
       popupBox.classList.add('active');
       popupOverlay.setAttribute('aria-hidden','false');
 
-      /* Stagger untuk tombol store */
       popupBox.querySelectorAll('.store-btn').forEach((b,i)=>{
         b.style.animationDelay=(0.2+i*0.2)+'s';
       });
@@ -332,17 +316,14 @@
     popupOverlay.addEventListener('click', (e)=>{ if(e.target===popupOverlay) closePop(); });
     document.addEventListener('keydown',(e)=>{ if(e.key==='Escape'&&isOpen&&!isAnimating) closePop(); });
 
-    /* ===== Swipe-to-close TANPA mematikan scroll =====
-       - Aktif jika gesture dimulai saat isi di top (scrollTop<=0) dan gerak ke bawah.
-       - Saat drag aktif, yang digeser adalah .popup (kontainer), bukan isi.
-    */
+    /* ===== Swipe-to-close ===== */
     let startY=0, deltaY=0, dragging=false, canDrag=false;
 
     popupBox.addEventListener('touchstart',(e)=>{
       if(!isOpen||isAnimating) return;
       startY = e.touches[0].clientY;
       deltaY = 0;
-      canDrag = (popupContent.scrollTop <= 0); // hanya kalau isi di paling atas
+      canDrag = (popupContent.scrollTop <= 0);
     }, {passive:true});
 
     popupBox.addEventListener('touchmove',(e)=>{
@@ -357,7 +338,7 @@
           popupOverlay.classList.add('dragging');
           pausePopupEmber();
         }
-        e.preventDefault(); // butuh passive:false
+        e.preventDefault();
         popupBox.style.transform = `translateY(${deltaY}px)`;
       }
     }, {passive:false});
@@ -388,10 +369,11 @@
       e.preventDefault();
       const number='6285778919857';
       const msg=encodeURIComponent('Hai Phoenix, saya tertarik dengan produk Phoenix, boleh info lebih lanjut?');
-      window.open(`https://wa.me/${number}?text=${msg}`,'_blank','noopener');
+      const win = window.open(`https://wa.me/${number}?text=${msg}`,'_blank');
+      if (win) win.opener = null;
     });
 
-    /* ======= Ember background global (retina-aware) ======= */
+    /* ======= Ember background global ======= */
     const canvas = document.getElementById('emberCanvas');
     const ctx = canvas.getContext('2d');
     let particles = [];
@@ -404,7 +386,7 @@
       canvas.height = Math.floor(viewH * dpr);
       canvas.style.width = viewW + 'px';
       canvas.style.height = viewH + 'px';
-      ctx.setTransform(dpr, 0, 0, dpr, 0, 0); // draw in CSS pixels
+      ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
     }
     window.addEventListener('resize', resizeGlobal);
     resizeGlobal();
@@ -450,7 +432,7 @@
     initParticles();
     animateGlobal();
 
-    /* ======= Ember khusus popup (retina-aware) ======= */
+    /* ======= Ember khusus popup ======= */
     const popupCanvas = document.getElementById('popupEmber');
     const pctx = popupCanvas.getContext('2d');
     let pParticles = [];
@@ -464,7 +446,7 @@
       popupCanvas.height = Math.floor(popH * dpr);
       popupCanvas.style.width = popW + 'px';
       popupCanvas.style.height = popH + 'px';
-      pctx.setTransform(dpr, 0, 0, dpr, 0, 0); // draw in CSS pixels
+      pctx.setTransform(dpr, 0, 0, dpr, 0, 0);
     }
 
     class PopupParticle{
@@ -524,7 +506,7 @@
       if (popupAF) { cancelAnimationFrame(popupAF); popupAF = null; }
     }
     function resumePopupEmber(){
-      if (!popupAF) { popupAF = requestAnimationFrame(loopPopup); }
+      if (!popupAF && isOpen) { popupAF = requestAnimationFrame(loopPopup); }
     }
 
     /* ======= Dynamic bottom-gap ======= */
