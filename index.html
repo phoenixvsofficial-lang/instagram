@@ -20,7 +20,6 @@
       --glass-border:rgba(255,255,255,.2);
       --bottom-gap:160px; /* untuk jaga jarak dari tombol/ footer */
       --top-lift:25px;    /* geser konten agak ke atas */
-      --popup-lift:16px;
     }
 
     *{margin:0;padding:0;box-sizing:border-box}
@@ -95,22 +94,6 @@
     .website,.email{border:1px solid var(--phoenix-amber);}
     .whatsapp{border:1px solid var(--phoenix-green);}
 
-    /* === Follow Section === (sekarang tidak dipakai, boleh dihapus kalau mau) */
-    .follow-section{
-      text-align:center; font-size:.95rem; color:#ccc;
-      margin:8px 0 30px; position:relative; top:calc(-1*var(--top-lift));
-      margin-bottom:calc(var(--bottom-gap) + 12px);
-      opacity:0; transform:translateY(40px);
-      animation:fadeUp 1s ease 2.5s forwards;
-    }
-    .follow-section p{margin-bottom:10px;}
-    .follow-links{ display:flex; justify-content:center; gap:20px; font-size:1.1rem; }
-    .follow-links a{
-      color:var(--phoenix-orange); font-weight:600; text-decoration:none; transition:.3s;
-    }
-    .follow-links a:hover{color:var(--phoenix-amber); transform:scale(1.1);}
-    @keyframes fadeUp{to{opacity:1; transform:translateY(0);}}
-
     /* === Branch Button === */
     .btn-branch{
       position:fixed; left:50%; transform:translateX(-50%);
@@ -135,11 +118,12 @@
     .popup{
       background:linear-gradient(160deg,rgba(15,15,15,.95),rgba(30,20,15,.95));
       backdrop-filter:blur(16px); -webkit-backdrop-filter:blur(16px);
-      padding:25px; border-radius:20px 20px 0 0; width:100%; max-height:70vh;
+      padding:0 0 18px;
+      border-radius:20px 20px 0 0;
+      width:100%; max-height:70vh;
       overflow:hidden;
       position:relative;
       transform:translateY(100%); transition:transform .4s ease;
-      border-top:3px solid var(--phoenix-orange);
       box-shadow:0 -8px 40px rgba(255,107,53,.35);
       will-change:transform;
     }
@@ -150,52 +134,132 @@
       z-index:0; pointer-events:none;
     }
 
-    .popup-content{
-      position:relative; z-index:3; max-height:70vh;
-      overflow-y:auto; -webkit-overflow-scrolling:touch;
-      padding-bottom:16px; border-radius:20px 20px 0 0;
-      isolation:isolate; background:transparent;
-    }
-
+    /* Glow bar di atas popup */
     .topbar{
       height:3px;
       background:linear-gradient(90deg,var(--phoenix-orange),var(--phoenix-amber),var(--phoenix-orange));
       background-size:200% 100%;
       animation:glowBar 3s linear infinite;
-      position:sticky; top:0; left:0; right:0; z-index:5;
+      position:relative;
+      z-index:2;
+      border-radius:20px 20px 0 0;
     }
     @keyframes glowBar{0%{background-position:0 0;}100%{background-position:200% 0;}}
 
+    .popup-content{
+      position:relative; z-index:3;
+      max-height:calc(70vh - 3px);
+      overflow-y:auto;
+      -webkit-overflow-scrolling:touch;
+      padding:16px 16px 16px;
+      isolation:isolate; background:transparent;
+    }
+
+    .popup-content::after{
+      content:"";
+      position:sticky; bottom:-1px;
+      left:0; right:0;
+      height:24px;
+      background:linear-gradient(to top, rgba(0,0,0,.9), transparent);
+      pointer-events:none;
+    }
+
     .popup .indicator{
-      width:50px; height:5px; background:rgba(255,255,255,.2);
-      border-radius:3px; margin:10px auto;
+      width:50px; height:5px;
+      background:rgba(255,255,255,.2);
+      border-radius:3px;
+      margin:10px auto 12px;
     }
-    .popup h2{
-      text-align:center; margin:10px 0 15px; color:var(--phoenix-amber);
-    }
+
     .popup .close{
       position:absolute; top:10px; right:18px; background:none;
       border:none; font-size:1.6rem; color:#fff; cursor:pointer; z-index:5;
     }
 
+    /* === Popup header === */
+    .popup-header{
+      text-align:center;
+      margin:4px 0 12px;
+    }
+    .popup-header h2{
+      color:var(--phoenix-amber);
+      font-size:1.2rem;
+      margin-bottom:4px;
+    }
+    .popup-header p{
+      font-size:.85rem;
+      color:#ccc;
+    }
+
+    /* === Search bar === */
+    .branch-search-wrap{
+      display:flex; align-items:center; gap:8px;
+      margin:8px 0 12px;
+      padding:8px 10px;
+      border-radius:12px;
+      background:rgba(0,0,0,.6);
+      border:1px solid rgba(255,255,255,.12);
+      backdrop-filter:blur(10px);
+      -webkit-backdrop-filter:blur(10px);
+    }
+    .branch-search-wrap i{
+      font-size:.9rem; color:var(--phoenix-amber);
+    }
+    #branchSearch{
+      flex:1; background:transparent;
+      border:none; outline:none;
+      color:#fff; font-size:.9rem;
+    }
+    #branchSearch::placeholder{
+      color:#888; font-size:.85rem;
+    }
+
+    /* === Store list === */
+    .store-list{
+      display:flex; flex-direction:column; gap:8px;
+      margin-bottom:10px;
+    }
+
     .popup .store-btn{
       display:flex; align-items:center; gap:10px;
-      background:var(--glass-bg); border:1px solid var(--glass-border);
+      background:var(--glass-bg);
+      border:1px solid var(--glass-border);
       backdrop-filter:blur(14px); -webkit-backdrop-filter:blur(14px);
-      padding:14px 16px; border-radius:12px; margin:10px 16px;
-      color:#fff; font-weight:600; text-decoration:none; transition:.3s;
-      opacity:0; transform:translateX(-60px); animation:storeSlideIn .75s ease forwards;
+      padding:14px 16px; border-radius:12px;
+      color:#fff; font-weight:600; text-decoration:none;
+      transition:.3s;
+      opacity:0; transform:translateX(-60px);
+      animation:storeSlideIn .75s ease forwards;
     }
-    .popup .store-btn i{font-size:1.2rem; color:var(--phoenix-amber);}
+    .popup .store-btn i{
+      font-size:1.2rem; color:var(--phoenix-amber);
+    }
     .popup .store-btn:hover{
-      background:rgba(255,107,53,.25); color:var(--phoenix-amber);
+      background:rgba(255,107,53,.25);
+      color:var(--phoenix-amber);
       transform:translateX(0) translateY(-2px);
       box-shadow:0 0 12px rgba(255,107,53,.4);
     }
     @keyframes storeSlideIn{to{opacity:1; transform:translateX(0);} }
 
-    .popup.dragging,.popup-overlay.dragging{
-      backdrop-filter:none!important; -webkit-backdrop-filter:none!important;
+    /* === Desktop 2 kolom === */
+    @media (min-width:600px){
+      .store-list{
+        display:grid;
+        grid-template-columns:1fr 1fr;
+        gap:10px;
+      }
+      .popup{
+        max-width:520px;
+        border-radius:24px;
+        margin-bottom:24px;
+      }
+      .topbar{
+        border-radius:24px 24px 0 0;
+      }
+      .popup-overlay{
+        align-items:center;
+      }
     }
 
     /* === Footer === */
@@ -224,12 +288,23 @@
   <div class="social">
     <a href="https://www.youtube.com/@PhoenixOfficial-r6j" class="youtube"><i class="fab fa-youtube"></i> YouTube</a>
     <a href="https://www.tiktok.com/@phoenixvs.official" class="tiktok"><i class="fab fa-tiktok"></i> TikTok</a>
-    <a href="https://phoenixvape.co.id/" class="website"><i class="fas fa-globe"></i> Website</a>
-    <a href="mailto:phoenixvsofficial@gmail.com" class="email"><i class="fas fa-envelope"></i> Email</a>
-    <a href="#" class="whatsapp" id="whatsappBtn"><i class="fab fa-whatsapp"></i> WhatsApp</a>
-  </div>
+    <a href="https://phoenixvape.co.id/" class="website" target="_blank" rel="noopener noreferrer"><i class="fas fa-globe"></i> Website</a>
 
-  <!-- follow-section dihapus dari sini -->
+    <!-- EMAIL langsung mailto -->
+    <a href="mailto:phoenixvsofficial@gmail.com" class="email">
+      <i class="fas fa-envelope"></i> Email
+    </a>
+
+    <!-- WHATSAPP langsung wa.me (tanpa JS) -->
+    <a
+      href="https://wa.me/6285778919857?text=Hai%20Phoenix%2C%20saya%20tertarik%20dengan%20produk%20Phoenix%2C%20boleh%20info%20lebih%20lanjut%3F"
+      class="whatsapp"
+      id="whatsappBtn"
+      target="_blank"
+      rel="noopener noreferrer">
+      <i class="fab fa-whatsapp"></i> WhatsApp
+    </a>
+  </div>
 
   <button class="btn-branch" id="openPopup">📍 Lokasi Cabang</button>
 
@@ -237,25 +312,78 @@
   <div class="popup-overlay" id="popupOverlay" aria-hidden="true">
     <div class="popup" id="popupBox" aria-modal="true" role="dialog">
       <canvas id="popupEmber"></canvas>
+      <div class="topbar"></div>
 
       <div class="popup-content" id="popupContent">
-        <div class="topbar"></div>
         <div class="indicator"></div>
         <button class="close" id="closePopup" aria-label="Tutup">✖</button>
-        <h2>📍 Lokasi Cabang Phoenix</h2>
 
-        <a href="https://maps.app.goo.gl/Y8GifwrGXPv5HLpY6?g_st=ipc" target="_blank" rel="noopener noreferrer" class="store-btn"><i class="fa-solid fa-location-dot"></i> Store 1 - Alam Sutera</a>
-        <a href="https://maps.google.com/?q=Phoenix+Vape+Coffee+Roxy" target="_blank" rel="noopener noreferrer" class="store-btn"><i class="fa-solid fa-location-dot"></i> Store 2 - Roxy</a>
-        <a href="https://maps.google.com/?q=Phoenix+Vape+Coffee+Pademangan" target="_blank" rel="noopener noreferrer" class="store-btn"><i class="fa-solid fa-location-dot"></i> Store 3 - Pademangan</a>
-        <a href="https://maps.google.com/?q=Phoenix+Vape+Coffee+Jembatan+Besi" target="_blank" rel="noopener noreferrer" class="store-btn"><i class="fa-solid fa-location-dot"></i> Store 5 - Jembatan Besi</a>
-        <a href="https://maps.app.goo.gl/D72zZYGnVe4GAE1o6?g_st=ipc" target="_blank" rel="noopener noreferrer" class="store-btn"><i class="fa-solid fa-location-dot"></i> Store 6 - Binus Center</a>
-        <a href="https://maps.google.com/?q=Phoenix+Vape+Coffee+Raden+Saleh" target="_blank" rel="noopener noreferrer" class="store-btn"><i class="fa-solid fa-location-dot"></i> Store 7 - Raden Saleh</a>
-        <a href="https://maps.google.com/?q=Phoenix+Vape+Coffee+Ciledug" target="_blank" rel="noopener noreferrer" class="store-btn"><i class="fa-solid fa-location-dot"></i> Store 8 - Ciledug</a>
-        <a href="https://maps.app.goo.gl/KbGqkM7eVME5Qn4w9?g_st=iw" target="_blank" rel="noopener noreferrer" class="store-btn"><i class="fa-solid fa-location-dot"></i> Store 9 - Ceger</a>
-        <a href="https://maps.google.com/?q=Phoenix+Vape+Coffee+Pluit" target="_blank" rel="noopener noreferrer" class="store-btn"><i class="fa-solid fa-location-dot"></i> Store 11 - Pluit</a>
-        <a href="https://maps.google.com/?q=Phoenix+Vape+Coffee+Mangga+Besar" target="_blank" rel="noopener noreferrer" class="store-btn"><i class="fa-solid fa-location-dot"></i> Store 13 - Mangga Besar</a>
-        <a href="https://maps.google.com/?q=Phoenix+Vape+Coffee+Lokasari" target="_blank" rel="noopener noreferrer" class="store-btn"><i class="fa-solid fa-location-dot"></i> Store 18 - Lokasari</a>
-        <a href="https://maps.google.com/?q=Phoenix+Vape+Coffee+Untar" target="_blank" rel="noopener noreferrer" class="store-btn"><i class="fa-solid fa-location-dot"></i> Store 68 - Untar</a>
+        <div class="popup-header">
+          <h2>📍 Lokasi Cabang Phoenix</h2>
+          <p>Tap salah satu cabang untuk langsung buka Google Maps. Tarik ke bawah untuk menutup.</p>
+        </div>
+
+        <div class="branch-search-wrap">
+          <i class="fa-solid fa-magnifying-glass"></i>
+          <input
+            type="text"
+            id="branchSearch"
+            placeholder="Cari cabang: Pluit, Ceger, Ciledug, dsb."
+            autocomplete="off"
+          />
+        </div>
+
+        <div class="store-list">
+          <!-- DATA CABANG TETAP -->
+          <a href="https://maps.app.goo.gl/Y8GifwrGXPv5HLpY6?g_st=ipc" target="_blank" rel="noopener noreferrer" class="store-btn">
+            <i class="fa-solid fa-location-dot"></i>
+            <span class="store-name">Store 1 - Alam Sutera</span>
+          </a>
+          <a href="https://maps.google.com/?q=Phoenix+Vape+Coffee+Roxy" target="_blank" rel="noopener noreferrer" class="store-btn">
+            <i class="fa-solid fa-location-dot"></i>
+            <span class="store-name">Store 2 - Roxy</span>
+          </a>
+          <a href="https://maps.google.com/?q=Phoenix+Vape+Coffee+Pademangan" target="_blank" rel="noopener noreferrer" class="store-btn">
+            <i class="fa-solid fa-location-dot"></i>
+            <span class="store-name">Store 3 - Pademangan</span>
+          </a>
+          <a href="https://maps.google.com/?q=Phoenix+Vape+Coffee+Jembatan+Besi" target="_blank" rel="noopener noreferrer" class="store-btn">
+            <i class="fa-solid fa-location-dot"></i>
+            <span class="store-name">Store 5 - Jembatan Besi</span>
+          </a>
+          <a href="https://maps.app.goo.gl/D72zZYGnVe4GAE1o6?g_st=ipc" target="_blank" rel="noopener noreferrer" class="store-btn">
+            <i class="fa-solid fa-location-dot"></i>
+            <span class="store-name">Store 6 - Binus Center</span>
+          </a>
+          <a href="https://maps.google.com/?q=Phoenix+Vape+Coffee+Raden+Saleh" target="_blank" rel="noopener noreferrer" class="store-btn">
+            <i class="fa-solid fa-location-dot"></i>
+            <span class="store-name">Store 7 - Raden Saleh</span>
+          </a>
+          <a href="https://maps.google.com/?q=Phoenix+Vape+Coffee+Ciledug" target="_blank" rel="noopener noreferrer" class="store-btn">
+            <i class="fa-solid fa-location-dot"></i>
+            <span class="store-name">Store 8 - Ciledug</span>
+          </a>
+          <a href="https://maps.app.goo.gl/KbGqkM7eVME5Qn4w9?g_st=iw" target="_blank" rel="noopener noreferrer" class="store-btn">
+            <i class="fa-solid fa-location-dot"></i>
+            <span class="store-name">Store 9 - Ceger</span>
+          </a>
+          <a href="https://maps.google.com/?q=Phoenix+Vape+Coffee+Pluit" target="_blank" rel="noopener noreferrer" class="store-btn">
+            <i class="fa-solid fa-location-dot"></i>
+            <span class="store-name">Store 11 - Pluit</span>
+          </a>
+          <a href="https://maps.google.com/?q=Phoenix+Vape+Coffee+Mangga+Besar" target="_blank" rel="noopener noreferrer" class="store-btn">
+            <i class="fa-solid fa-location-dot"></i>
+            <span class="store-name">Store 13 - Mangga Besar</span>
+          </a>
+          <a href="https://maps.google.com/?q=Phoenix+Vape+Coffee+Lokasari" target="_blank" rel="noopener noreferrer" class="store-btn">
+            <i class="fa-solid fa-location-dot"></i>
+            <span class="store-name">Store 18 - Lokasari</span>
+          </a>
+          <a href="https://maps.google.com/?q=Phoenix+Vape+Coffee+Untar" target="_blank" rel="noopener noreferrer" class="store-btn">
+            <i class="fa-solid fa-location-dot"></i>
+            <span class="store-name">Store 68 - Untar</span>
+          </a>
+        </div>
       </div>
     </div>
   </div>
@@ -269,7 +397,7 @@
     const popupContent = document.getElementById('popupContent');
     const openPopup = document.getElementById('openPopup');
     const closePopup = document.getElementById('closePopup');
-    const whatsappBtn = document.getElementById('whatsappBtn');
+    const branchSearch = document.getElementById('branchSearch');
 
     let isOpen=false, isAnimating=false;
 
@@ -282,8 +410,14 @@
       popupBox.classList.add('active');
       popupOverlay.setAttribute('aria-hidden','false');
 
+      // reset search tiap buka
+      if(branchSearch){
+        branchSearch.value='';
+        branchSearch.dispatchEvent(new Event('input'));
+      }
+
       popupBox.querySelectorAll('.store-btn').forEach((b,i)=>{
-        b.style.animationDelay=(0.2+i*0.2)+'s';
+        b.style.animationDelay=(0.2+i*0.08)+'s';
       });
 
       startPopupEmber();
@@ -364,14 +498,17 @@
       startY=0; deltaY=0; canDrag=false;
     });
 
-    /* ===== WhatsApp ===== */
-    whatsappBtn.addEventListener('click',(e)=>{
-      e.preventDefault();
-      const number='6285778919857';
-      const msg=encodeURIComponent('Hai Phoenix, saya tertarik dengan produk Phoenix, boleh info lebih lanjut?');
-      const win = window.open(`https://wa.me/${number}?text=${msg}`,'_blank');
-      if (win) win.opener = null;
-    });
+    /* ===== Pencarian cabang ===== */
+    if(branchSearch){
+      const storeButtons = Array.from(popupBox.querySelectorAll('.store-btn'));
+      branchSearch.addEventListener('input', ()=>{
+        const term = branchSearch.value.trim().toLowerCase();
+        storeButtons.forEach(btn=>{
+          const text = btn.textContent.toLowerCase();
+          btn.style.display = (!term || text.includes(term)) ? 'flex' : 'none';
+        });
+      });
+    }
 
     /* ======= Ember background global ======= */
     const canvas = document.getElementById('emberCanvas');
